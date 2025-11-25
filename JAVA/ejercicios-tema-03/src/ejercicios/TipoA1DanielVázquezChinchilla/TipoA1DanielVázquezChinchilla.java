@@ -19,7 +19,7 @@ public class TipoA1DanielVázquezChinchilla {
 		String[] arra1 = num2.split("");
 		String cont1 = arra1[0];
 		for (String deletreo : arra1) {
-			if (cont1.contains(deletreo)) {
+			if (!(cont1.contains(deletreo))) {
 				cont1 += deletreo;
 			}
 		}
@@ -29,3 +29,4 @@ public class TipoA1DanielVázquezChinchilla {
 	}
 
 }
+
