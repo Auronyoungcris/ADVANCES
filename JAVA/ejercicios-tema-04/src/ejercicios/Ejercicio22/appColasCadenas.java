@@ -1,6 +1,6 @@
-package ejercicios.Ejercicio22;
+package ejercicios.Ejercicio22.copy;
 
-import java.util.Iterator;
+import ejercicios.Ejercicio22.ColasCadenas;
 
 public class appColasCadenas {
 
@@ -13,8 +13,9 @@ public class appColasCadenas {
 		System.out.println(colitas);
 		colitas.añadirCadena("tercero");
 		System.out.println(colitas);
-		for (Integer i=0; i< colitas.getTamaño()-1;i++) {
+		for (Integer i=0; i< colitas.getTamaño();i++) {
 			System.out.println(colitas.sacarCadena());
+			i--;
 		}
 		colitas.añadirCadena("cuarto");
 		System.out.println(colitas);

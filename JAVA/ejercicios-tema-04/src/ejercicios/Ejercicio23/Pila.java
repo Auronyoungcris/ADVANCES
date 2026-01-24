@@ -1,17 +1,17 @@
-package ejercicios.Ejercicio22;
+package ejercicios.Ejercicio23;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ColasCadenas {
+public class Pila {
 	private List<String> lisCc;
 
-	public ColasCadenas() {
+	public Pila() {
 		lisCc = new ArrayList<>();
 	}
 
 	public void añadirCadena(String recibo) {
-		lisCc.add(recibo);
+		lisCc.add(0, recibo);
 	}
 
 	public String sacarCadena() {
@@ -26,7 +26,9 @@ public class ColasCadenas {
 
 	@Override
 	public String toString() {
-		return "ColasCadenas [" + lisCc + "]";
+		return "Pila [" + lisCc + "]";
 	}
+
+	
 
 }
