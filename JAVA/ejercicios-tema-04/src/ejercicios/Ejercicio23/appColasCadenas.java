@@ -1,6 +1,6 @@
-package ejercicios.Ejercicio22.copy;
+package ejercicios.Ejercicio23;
 
-import ejercicios.Ejercicio22.ColasCadenas;
+import ejercicios.Ejercicio23.ColasCadenas;
 
 public class appColasCadenas {
 

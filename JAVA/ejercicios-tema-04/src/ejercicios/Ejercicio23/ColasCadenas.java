@@ -1,4 +1,4 @@
-package ejercicios.Ejercicio22;
+package ejercicios.Ejercicio23;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +15,10 @@ public class ColasCadenas {
 	}
 
 	public String sacarCadena() {
-		String removeDelete = lisCc.get(0);
-		lisCc.remove(0);
-		return removeDelete;
+		if (lisCc.isEmpty()) {
+			return null;
+		}
+		return lisCc.remove(0);
 	}
 
 	public Integer getTamaño() {
