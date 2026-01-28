@@ -1,10 +1,10 @@
-package ejercicios.Ejercicio28;
+package ejercicios.Ejercicio29;
 
 public class Guionista extends Participante {
 
 	@Override
 	public Integer getSueldo() {
-		return 50000;
+		return SUELDO_GUIONISTA;
 		
 	}
 

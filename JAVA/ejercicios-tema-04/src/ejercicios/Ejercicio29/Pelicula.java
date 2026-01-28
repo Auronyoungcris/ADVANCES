@@ -1,4 +1,4 @@
-package ejercicios.Ejercicio28;
+package ejercicios.Ejercicio29;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +52,12 @@ public class Pelicula {
 
 	public void setSuDirector(Director suDirector) {
 		this.suDirector = suDirector;
+	}
+
+	@Override
+	public String toString() {
+		return "Pelicula [añoDeEstreno=" + añoDeEstreno + ", titulo=" + titulo + ", listaDeActores=" + listaDeActores
+				+ ", suGuionista=" + suGuionista + ", suDirector=" + suDirector + "]";
 	}
 
 }

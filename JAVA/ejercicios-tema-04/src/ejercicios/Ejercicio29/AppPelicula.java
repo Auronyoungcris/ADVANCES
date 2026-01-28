@@ -1,4 +1,4 @@
-package ejercicios.Ejercicio28;
+package ejercicios.Ejercicio29;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +45,15 @@ public class AppPelicula {
 		miPelicula2.setAñoDeEstreno(2027);
 		miPelicula2.setSuDirector(d1);
 		miPelicula2.setSuGuionista(g2);
-		miPelicula2.getListaDeActores().add(a1);
-		miPelicula2.getListaDeActores().add(a2);
+		miPelicula2.getListaDeActores().addAll(miPelicula.getListaDeActores());
 		miPelicula2.getListaDeActores().add(a3);
 		miPelicula2.getListaDeActores().add(a4);
 		miPelicula2.setTitulo("Muerte en la sombra");
-		System.out.println("Los Actores de la pelicula: "+ miPelicula.getTitulo()+"son "+miPelicula.getListaDeActores());
+		System.out.println("Los Actores de la pelicula "+ miPelicula.getTitulo()+"son "+miPelicula.getListaDeActores());
 		System.out.println("EL sueldo del  guionistas de la pelicula "+ miPelicula.getTitulo()+" es "+ miPelicula.getSuGuionista().getSueldo()+" y su nacionalidad es "+miPelicula.getSuGuionista().getNacionalidad()+".");
 		miPelicula2.getListaDeActores().remove(2);
 		miPelicula.getListaDeActores().add(a3);
-		System.out.println("Los Actores de la película: "+ miPelicula.getTitulo()+" son "+miPelicula.getListaDeActores()+" y los de la película "+ miPelicula2.getTitulo()+" son "+miPelicula2.getListaDeActores());
+		System.out.println("Los Actores de la película "+ miPelicula.getTitulo()+" son "+miPelicula.getListaDeActores()+" y los de la película "+ miPelicula2.getTitulo()+" son "+miPelicula2.getListaDeActores());
 		
 		
 	}
