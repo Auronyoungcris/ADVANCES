@@ -1,5 +1,7 @@
 package ejercicios.Ejercicio30;
 
+import java.util.Objects;
+
 public abstract class Personaje {
 	protected String nombre;
 	protected String codigo;
@@ -7,9 +9,8 @@ public abstract class Personaje {
 	protected Integer daño;
 	protected Integer velocidadAtaque;
 
-	public Personaje() {
 
-	}
+
 
 	public String getNombre() {
 		return nombre;
@@ -28,11 +29,11 @@ public abstract class Personaje {
 	}
 
 	public Integer getVida() {
-		return Vida;
+		return vida;
 	}
 
 	public void setVida(Integer vida) {
-		Vida = vida;
+		this.vida = vida;
 	}
 
 	public Integer getDaño() {
@@ -55,8 +56,26 @@ public abstract class Personaje {
 
 	@Override
 	public String toString() {
-		return "Tipo de personaje" + getType() + "nombre=" + nombre + ", codigo=" + codigo + ", Vida=" + Vida
+		return "Tipo de personaje=  " + getType() + " nombre=" + nombre + ", codigo=" + codigo + ", Vida=" + vida
 				+ ", daño=" + daño + ", velocidadAtaque=" + velocidadAtaque;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigo, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Personaje other = (Personaje) obj;
+		return Objects.equals(codigo, other.codigo) && Objects.equals(nombre, other.nombre);
+	}
+
+	
 }

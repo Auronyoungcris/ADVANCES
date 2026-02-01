@@ -1,12 +1,13 @@
 package ejercicios.Ejercicio30;
 
 public class Parasito extends Personaje {
-	
-	public Parasito() {
-		super();
-		vida=200;
-		daño=2;
-		velocidadAtaque=1;
+
+	public Parasito(String nombre, String codigo) {
+		this.nombre = nombre;
+		this.codigo = codigo;
+		vida = 200;
+		daño = 2;
+		velocidadAtaque = 1;
 	}
 
 	@Override
@@ -14,7 +15,5 @@ public class Parasito extends Personaje {
 		// TODO Auto-generated method stub
 		return "Parasito";
 	}
-
-
 
 }

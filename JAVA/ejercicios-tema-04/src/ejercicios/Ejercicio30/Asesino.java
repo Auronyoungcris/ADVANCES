@@ -2,8 +2,9 @@ package ejercicios.Ejercicio30;
 
 public class Asesino extends Personaje{
 
-	public Asesino() {
-		super();
+	public Asesino(String nombre, String codigo) {
+		this.nombre = nombre;
+		this.codigo = codigo;
 		vida=100;
 		daño=10;
 		velocidadAtaque=5;
