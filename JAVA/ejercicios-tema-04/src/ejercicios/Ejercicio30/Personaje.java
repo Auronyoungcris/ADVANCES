@@ -9,9 +9,6 @@ public abstract class Personaje {
 	protected Integer daño;
 	protected Integer velocidadAtaque;
 
-
-
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -32,24 +29,12 @@ public abstract class Personaje {
 		return vida;
 	}
 
-	public void setVida(Integer vida) {
-		this.vida = vida;
-	}
-
 	public Integer getDaño() {
 		return daño;
 	}
 
-	public void setDaño(Integer daño) {
-		this.daño = daño;
-	}
-
 	public Integer getVelocidadAtaque() {
 		return velocidadAtaque;
-	}
-
-	public void setVelocidadAtaque(Integer velocidadAtaque) {
-		this.velocidadAtaque = velocidadAtaque;
 	}
 
 	public abstract String getType();
@@ -57,7 +42,7 @@ public abstract class Personaje {
 	@Override
 	public String toString() {
 		return "Tipo de personaje=  " + getType() + " nombre=" + nombre + ", codigo=" + codigo + ", Vida=" + vida
-				+ ", daño=" + daño + ", velocidadAtaque=" + velocidadAtaque;
+				+ ", daño=" + daño + ", velocidadAtaque=" + velocidadAtaque + "\n";
 	}
 
 	@Override
@@ -77,5 +62,4 @@ public abstract class Personaje {
 		return Objects.equals(codigo, other.codigo) && Objects.equals(nombre, other.nombre);
 	}
 
-	
 }
