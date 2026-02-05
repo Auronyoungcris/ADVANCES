@@ -201,3 +201,148 @@ BEGIN
 END;
 /
 UNDEFINE DIME_UN_MUMERO;
+
+DECLARE
+GOLES_CASA INT:= &GOLES_CASA;
+GOLES_FUERA INT:= &GOLES_FUERA;
+BEGIN
+    IF GOLES_CASA>GOLES_FUERA then
+     DBMS_OUTPUT.PUT_LINE('El equipo local ha ganado.');
+     ELSIF GOLES_CASA<GOLES_FUERA then
+     DBMS_OUTPUT.PUT_LINE('El equipo visitante ha ganado');
+     ELSE
+     DBMS_OUTPUT.PUT_LINE('El resultado del partido ha sido empate');
+     END if;
+END;
+/
+UNDEFINE GOLES_CASA;
+UNDEFINE GOLES_FUERA;
+
+DECLARE
+numero int;
+BEGIN
+    numero:=1;
+loop
+    DBMS_OUTPUT.PUT_LINE(numero);
+    numero:=numero+1;
+    exit when numero = 80 ;
+END loop;
+end;
+/
+--13
+DECLARE
+numero int;
+BEGIN
+    numero:=0;
+loop
+    DBMS_OUTPUT.PUT_LINE(numero);
+    numero:=numero+1;
+    exit when numero >20 ;
+END loop;
+end;
+/
+
+DECLARE
+numero int;
+BEGIN
+    numero:=0;
+loop
+    DBMS_OUTPUT.PUT_LINE(numero);
+    numero:=numero+1;
+   if numero >20 then exit;
+   end if;
+END loop;
+end;
+/
+
+DECLARE
+numero int;
+BEGIN
+    numero:=0;
+while numero<=20 loop 
+   DBMS_OUTPUT.PUT_LINE(numero);
+    numero:=numero+1;
+
+END loop;
+end;
+/
+DECLARE
+numero int;
+BEGIN
+    numero:=0;
+for indice in 0..20 loop
+   DBMS_OUTPUT.PUT_LINE(numero);
+    numero:=numero+1;
+
+END loop;
+end;
+/
+
+DECLARE
+numero int;
+BEGIN
+    numero:=0;
+for indice in reverse 0..20 loop
+   DBMS_OUTPUT.PUT_LINE(numero);
+    numero:=numero+1;
+
+END loop;
+end;
+/
+--17
+DECLARE
+numero int;
+BEGIN
+    numero:=20;
+for indice in reverse 0..20 loop
+   DBMS_OUTPUT.PUT_LINE(numero);
+    numero:=numero-1;
+
+END loop;
+end;
+/
+--18
+DECLARE
+numero int;
+BEGIN
+    numero:=0;
+for numero in  1..40 loop
+if mod(numero,2)=0 then
+   DBMS_OUTPUT.PUT_LINE(numero);
+   End if;
+END loop;
+end;
+/
+--19
+DECLARE
+numero int;
+variable int;
+resultado int;
+BEGIN
+    numero:=0;
+    variable:=0;
+for numero in 1..10 loop
+
+    for variable in  0..9 loop
+resultado:=numero*variable;
+   DBMS_OUTPUT.PUT_LINE(numero||'  X '||variable||' = '|| resultado);
+    END loop;
+      END loop;
+end;
+/
+--20
+select * from dept;
+DECLARE
+NUMEROMaxº
+dept.depno%TYPE;
+
+BEGIN
+   
+for numero in 10..40 loop
+select dname from dept where depno=numero
+DBMS_OUTPUT.PUT_LINE();
+
+END loop;
+end;
+/
+
