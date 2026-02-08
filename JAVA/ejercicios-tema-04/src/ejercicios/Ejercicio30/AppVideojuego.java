@@ -14,19 +14,19 @@ public class AppVideojuego {
 		j1.getEquipoCombate().añadirPersonaje(a1);
 		j1.getEquipoCombate().añadirPersonaje(a2);
 		j1.getEquipoCombate().añadirPersonaje(a3);
-		System.out.println(j1.getEquipoCombate().getListaDePersonaje());
+		System.out.println(j1.getEquipoCombate());
 		Parasito p1 = new Parasito("blas","B69");
 		System.out.println("Su parasito  quita "+p1.getDaño()+ " puntos de daño y su velocidad es "+p1.getVelocidadAtaque());
 		j1.getEquipoCombate().añadirPersonaje(p1);
-		System.out.println(j1.getEquipoCombate().getListaDePersonaje());
+		System.out.println(j1.getEquipoCombate());
 		System.out.println(j1.getEquipoCombate().getVidaEquipo());
 		j1.getEquipoCombate().añadirPersonaje(p1);
-		System.out.println(j1.getEquipoCombate().getListaDePersonaje());
+		System.out.println(j1.getEquipoCombate());
 		Parasito p2 = new Parasito("Vecna","ST05");
 		Parasito p3 = new Parasito("paras","#0046");
 		j1.getEquipoCombate().añadirPersonaje(p2);
 		j1.getEquipoCombate().añadirPersonaje(p3);
-		System.out.println(j1.getEquipoCombate().getListaDePersonaje());
+		System.out.println(j1.getEquipoCombate());
 		System.out.println(j1.getEquipoCombate().getVidaEquipo());
 		
 		
