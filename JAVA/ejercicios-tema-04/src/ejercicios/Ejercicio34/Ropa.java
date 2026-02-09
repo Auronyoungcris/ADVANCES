@@ -1,4 +1,4 @@
-package ejercicios.Ejercicio33;
+package ejercicios.Ejercicio34;
 
 public class Ropa extends Articulo {
 	private String talla;

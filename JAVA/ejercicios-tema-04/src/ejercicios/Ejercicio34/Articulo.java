@@ -1,4 +1,4 @@
-package ejercicios.Ejercicio33;
+package ejercicios.Ejercicio34;
 
 public abstract  class  Articulo {
 	protected String descripcion;
