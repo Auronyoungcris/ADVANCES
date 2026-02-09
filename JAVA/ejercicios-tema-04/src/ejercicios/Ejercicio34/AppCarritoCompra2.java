@@ -1,14 +1,14 @@
 package ejercicios.Ejercicio34;
 
-import ejercicios.Ejercicio33.CarritoCompra;
-import ejercicios.Ejercicio33.Cliente;
-import ejercicios.Ejercicio33.Libro;
-import ejercicios.Ejercicio33.Ropa;
+import ejercicios.Ejercicio34.CarritoCompra2;
+import ejercicios.Ejercicio34.Cliente;
+import ejercicios.Ejercicio34.Libro;
+import ejercicios.Ejercicio34.Ropa;
 
 public class AppCarritoCompra2 {
 public static void main(String[] args) {
-	Cliente miCliente = new Cliente("12345678X","Blas de los Montes");
-	CarritoCompra miCarrito = new CarritoCompra(miCliente);
+	Cliente miCliente = new Cliente("Blas de los Montes","12345678X");
+	CarritoCompra2 miCarrito = new CarritoCompra2(miCliente);
 	System.out.println(miCarrito);
 	Ropa r1 =new Ropa("Poncho","XL");
 	r1.setPrecio(20.00);
@@ -22,7 +22,7 @@ public static void main(String[] args) {
 	l1.setDescripcion("Así habló Zaratustra");
 	miCarrito.addArticulo(l1);
 	System.out.println(miCarrito);
-	miCarrito.borrarArticulo(0);
+	miCarrito.borrarArticulo(r1);
 	System.out.println(miCarrito);
 	System.out.println("Su precio medio de articulos es: "+miCarrito.getPrecioMedio());
 	miCarrito.vaciarCesta();
