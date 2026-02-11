@@ -17,9 +17,11 @@ public class Ejercicio35 {
 			lista.add(sc.nextLine());
 		}
 		System.out.println(lista);
+		Set<String> mayus = new HashSet<>();
 		for (String string : lista) {
-			string =string.toUpperCase();
+			mayus.add(string.toUpperCase());
 		}
+		lista=mayus;
 		System.out.println(lista);
 		if (lista.contains("")) {
 			System.out.println("Hay alguna cadena vacia vacia ");
@@ -33,8 +35,8 @@ public class Ejercicio35 {
 		 }
 		
 		
-		System.out.println(lista);
+		
 	}
-
+		 
 }
 }
