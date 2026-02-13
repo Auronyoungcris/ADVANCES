@@ -373,23 +373,140 @@ BEGIN
 END;
 /
 DECLARE
+
 TYPE TIPODEPT IS RECORD(
+    
     ID DEPT.DEPTNO%TYPE,
     NOMBRE DEPT.DNAME%TYPE,
     LOCALIDAD DEPT.LOC%TYPE
 );
-MIDEPT TIPODEPT;
-MIDEPT2 TIPODEPT;
+fila TIPODEPT;
+fila2 TIPODEPT;
 BEGIN
-    SELECT * INTO MIDEPT.ID, MIDEPT.NOMBRE,MIDEPT.LOCALIDAD FROM DEPT WHERE DEPTNO=10;
-    SELECT DEPTNO, DNAME INTO MIDEPT2.ID, MIDEPT2.NOMBRE FROM DEPT WHERE DEPTNO=20;
-    DBMS_OUTPUT.PUT_LINE(MIDEPT.ID);
-    DBMS_OUTPUT.PUT_LINE(MIDEPT.NOMBRE);
-    DBMS_OUTPUT.PUT_LINE(MIDEPT.LOCALIDAD);
-    DBMS_OUTPUT.PUT_LINE(MIDEPT2.ID);
-    DBMS_OUTPUT.PUT_LINE(MIDEPT2.NOMBRE);
+    SELECT * INTO fila.ID, fila.NOMBRE,fila.LOCALIDAD FROM DEPT WHERE DEPTNO=10;
+    SELECT DEPTNO, DNAME INTO fila2.ID, fila2.NOMBRE FROM DEPT WHERE DEPTNO=20;
+    DBMS_OUTPUT.PUT_LINE(fila.ID);
+    DBMS_OUTPUT.PUT_LINE(fila.NOMBRE);
+    DBMS_OUTPUT.PUT_LINE(fila.LOCALIDAD);
+    DBMS_OUTPUT.PUT_LINE(fila2.ID);
+    DBMS_OUTPUT.PUT_LINE(fila2.NOMBRE);
     END;
     /
+DECLARE
+
+filacompleta dept%ROWTYPE;
+BEGIN
+select * into filacompleta from dept where DEPTNO= 30;
+DBMS_OUTPUT.PUT_LINE(filacompleta.deptno|| ' ' || filacompleta.dname|| ' ' ||filacompleta.loc);
+end;
+/
+DECLARE
+filacompleta dept%ROWTYPE;
+BEGIN
+select deptno, loc into filacompleta.deptno, filacompleta.loc from dept where DEPTNO= 40;
+DBMS_OUTPUT.PUT_LINE(filacompleta.deptno|| ' ' ||filacompleta.loc);
+end;
+/
+--ej 7
+Declare 
+type mitipotabla is table of int index by Binary_integer;
+mitabla mitipotabla;
+BEGIN
+for i in 0..20 loop
+mitabla(i):=i;
+end loop;
+for i in 0..20 loop
+DBMS_OUTPUT.PUT_LINE(mitabla(i));
+end loop;
+end;
+/
+Declare
+type persona is record(
+    nombre varchar(50),
+    apellido1 varchar(100),
+    apellido2 varchar(100)
+);
+type personas is table of persona index by binary_integer;
+mipersona personas;
+begin
+for i in 1..2 loop
+mipersona(i).nombre:='daniel'||i;
+mipersona(i).apellido1:='vazquez'||i;
+mipersona(i).apellido2:='Chinchilla'||i;
+end loop;
+for i in 1..2 loop
+DBMS_OUTPUT.PUT_LINE(mipersona(i).nombre);
+DBMS_OUTPUT.PUT_LINE(mipersona(i).apellido1);
+DBMS_OUTPUT.PUT_LINE(mipersona(i).apellido2);
+end loop;
+end;
+/
+--ejercicio 9
+Declare 
+type mitipotabla is table of int index by Binary_integer;
+mitabla mitipotabla;
+BEGIN
+for i in 0..20 loop
+mitabla(i):=i;
+end loop;
+for i in mitabla.first..mitabla.last loop
+DBMS_OUTPUT.PUT_LINE(mitabla(i));
+end loop;
+DBMS_OUTPUT.PUT_LINE('Su tabla tiene '||mitabla.count||' elementos.');
+mitabla.delete(mitabla.last);
+DBMS_OUTPUT.PUT_LINE('Su tabla tiene '||mitabla.count||' elementos.');
+if mitabla.exists(10) then
+DBMS_OUTPUT.PUT_LINE('Existe');
+ELSE
+DBMS_OUTPUT.PUT_LINE('No existe');
+end if;
+end;
+/
+--Ejercicio 10
+DECLARE
+usuario1 emp.EMPNO%type :=&DIME_USUARIO_1;
+usuario2 emp.EMPNO%type :=&DIME_USUARIO_2;
+TYPE EMPS IS TABLE OF EMP%ROWTYPE INDEX OF BINARY_INTEGER;
+miemps emps;
+numero int:=0;
+BEGIN
+FOR I  IN usuario1..usuario2 loop
+select * into miemps(numero) form emp where empno =i;
+numero:=numero+1
+end loop;
+for i in miemps.first..miemps.last loop
+DBMS_OUTPUT.PUT_LINE(miemps(i).ENAME || ' | '|| miemps(i).job|| ' | '||miemps(i).empno)
+end loop;
+end;
+UNDEFINE DIME_USUARIO_1;
+UNDEFINE DIME_USUARIO_2;
+/
+
+DECLARE
+    EMPNO12 CHAR(9) := '&METEEMPNO12';
+    TYPE TEMPNOS IS TABLE OF EMP.EMPNO%TYPE INDEX BY BINARY_INTEGER;
+    TABLAEMPNOS TEMPNOS;
+    TYPE TEMP IS TABLE OF EMP%ROWTYPE INDEX BY BINARY_INTEGER;
+    FILASEMP TEMP;
+    CONTADOR INT := 1;
+BEGIN
+    TABLAEMPNOS(1) := TO_NUMBER(SUBSTR(EMPNO12,1,INSTR(EMPNO12,'|')-1));
+    TABLAEMPNOS(2) := TO_NUMBER(SUBSTR(EMPNO12,INSTR(EMPNO12,'|')+1));
+
+    FOR I IN TABLAEMPNOS.FIRST..TABLAEMPNOS.LAST LOOP
+        SELECT *
+            INTO FILASEMP(I)
+            FROM EMP
+            WHERE EMPNO = TABLAEMPNOS(I);
+    END LOOP;
+    WHILE CONTADOR <= FILASEMP.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE(FILASEMP(CONTADOR).EMPNO);
+        DBMS_OUTPUT.PUT_LINE(FILASEMP(CONTADOR).ENAME);
+        CONTADOR := CONTADOR + 1;
+    END LOOP;
+END;
+/
+
 
 
 
