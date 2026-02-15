@@ -13,13 +13,74 @@ public class CuentaAhorros {
 		this.cuentaBancaria = cuentaBancaria;
 		listaMovimiento = new ArrayList<>();
 	}
+
 	public void añadirMovimiento(Movimiento movimiento) {
 		listaMovimiento.add(movimiento);
 	}
-	public void Totaldinero() {
-		for (Ingresos ingresos : listaMovimiento) {
-			
+
+	public BigDecimal Totaldinero() {
+		BigDecimal total = BigDecimal.ZERO;
+		if (listaMovimiento.size() != 0) {
+			for (Movimiento movimientos : listaMovimiento) {
+				total = total.add(movimientos.getImporte());
+			}
+
 		}
+		return total;
+
+	}
+
+	public String todosMovimienntos() {
+		String lista = "";
+		if (listaMovimiento.size() != 0) {
+			for (Movimiento movimiento : listaMovimiento) {
+				lista += movimiento;
+			}
+		}
+
+		return lista;
+	}
+
+	public String todosRetiradas() {
+		String lista = "";
+		if (listaMovimiento.size() != 0) {
+			for (Movimiento movimiento : listaMovimiento) {
+				if (movimiento.tipoMovimiento().contains("R")) {
+					lista += movimiento;
+				}
+
+			}
+		}
+
+		return lista;
+	}
+
+	public String todosIngresos() {
+		String lista = "";
+		if (listaMovimiento.size() != 0) {
+			for (Movimiento movimiento : listaMovimiento) {
+				if (movimiento.tipoMovimiento().contains("I")) {
+					lista += movimiento;
+				}
+
+			}
+		}
+
+		return lista;
+	}
+
+	public String todosCargos() {
+		String lista = "";
+		if (listaMovimiento.size() != 0) {
+			for (Movimiento movimiento : listaMovimiento) {
+				if (movimiento.tipoMovimiento().contains("C")) {
+					lista += movimiento;
+				}
+
+			}
+		}
+
+		return lista;
 	}
 	
 }

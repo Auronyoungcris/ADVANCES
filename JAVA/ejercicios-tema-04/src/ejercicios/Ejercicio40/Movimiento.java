@@ -21,7 +21,13 @@ public abstract class Movimiento {
 	}
 
 	public void setImporte(BigDecimal importe) {
-		this.importe = importe;
+		if (tipoMovimiento().contains("R") || tipoMovimiento().contains("C")) {
+			this.importe = importe.negate();
+		}
+		else {
+			this.importe = importe;
+		}
+		fecha = LocalDate.now();
 	}
 	public String importeFormato() {
 		DecimalFormat formato = new DecimalFormat("#,##0.00 €");

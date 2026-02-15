@@ -1,6 +1,6 @@
 package ejercicios.Ejercicio40;
 
-public class Retiradas extends Movimiento{
+public class Retirada extends Movimiento{
 
 	@Override
 	public String tipoMovimiento() {
@@ -10,7 +10,7 @@ public class Retiradas extends Movimiento{
 	@Override
 	public String extraMovimiento() {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 }

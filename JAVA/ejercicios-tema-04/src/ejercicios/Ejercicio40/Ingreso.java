@@ -1,6 +1,6 @@
 package ejercicios.Ejercicio40;
 
-public class Ingresos extends Movimiento{
+public class Ingreso extends Movimiento{
 	protected String descripcion ;
 
 	
