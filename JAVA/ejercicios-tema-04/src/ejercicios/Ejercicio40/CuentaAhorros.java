@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CuentaAhorros {
-	private BigDecimal cuentaBancaria;
+	private String cuentaBancaria;
 	private List<Movimiento> listaMovimiento;
 	private BigDecimal dinero;
 
-	public CuentaAhorros(BigDecimal cuentaBancaria) {
+	public CuentaAhorros(String cuentaBancaria) {
 		this.cuentaBancaria = cuentaBancaria;
 		listaMovimiento = new ArrayList<>();
 	}

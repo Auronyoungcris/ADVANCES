@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class AppCuentaAhorros {
 	public static void main(String[] args) {
-		CuentaAhorros c1 = new CuentaAhorros(new BigDecimal("21005449684984894245"));
+		CuentaAhorros c1 = new CuentaAhorros("21005449684984894245");
 		System.out.println(c1.Totaldinero());
 		Cargo ca1 = new Cargo();
 		c1.añadirMovimiento(ca1);

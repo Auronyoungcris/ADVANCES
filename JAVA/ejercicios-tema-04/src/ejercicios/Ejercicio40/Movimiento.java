@@ -20,15 +20,9 @@ public abstract class Movimiento {
 		return importe;
 	}
 
-	public void setImporte(BigDecimal importe) {
-		if (tipoMovimiento().contains("R") || tipoMovimiento().contains("C")) {
-			this.importe = importe.negate();
-		}
-		else {
-			this.importe = importe;
-		}
-		fecha = LocalDate.now();
-	}
+	public abstract void setImporte(BigDecimal importe); 
+	
+	
 	public String importeFormato() {
 		DecimalFormat formato = new DecimalFormat("#,##0.00 €");
 		return formato.format(importe);
