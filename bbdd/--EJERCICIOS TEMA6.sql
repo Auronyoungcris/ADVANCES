@@ -60,27 +60,103 @@ end;
  UNDEFINE Dime_un_Numero;
 --4. 
 --Dado un determinado código de departamento (DEPTNO) de la tabla DEPT, devolver por pantalla el nombre (DNAME).
+DECLARE
+mideptno dept.deptno%type :=&METEDEPTNO;
+midname dept.DNAME%type;
+EXISTE int:=0;
+begin
+select count(*) into existe from dept where deptno=mideptno;
+if existe=1 then
+select dname into midname from dept where deptno=mideptno;
+    DBMS_OUTPUT.PUT_LINE(midname);
+ELSE
+ DBMS_OUTPUT.PUT_LINE('No es un deptno valido, picha. ');
+end if;
+end;
+/
+undefine METEDEPTNO;
 
 --5. 
 --Obtener el nombre (ENAME) y puesto de trabajo (JOB) del empleado (tabla EMP) que tenga el código (EMPNO) igual a 7782.
+DECLARE
+MIENAME EMP.ENAME%TYPE;
+MIJOB EMP.JOB%TYPE;
+BEGIN
+    SELECT ENAME, JOB INTO MIENAME, MIJOB FROM EMP WHERE EMPNO =7782;
+    DBMS_OUTPUT.PUT_LINE(MIENAME||MIJOB);
+END;
+/
+--6. 
+--Pedir por pantalla un NIF (8 números y una letra). Comprobar si la letra es correcta y luego mostrar por pantalla si ese NIF es correcto.
+DECLARE 
+MINIF char(9):='&METEDNI';
+NUMNIF INT:=TO_NUMBER(SUBSTR(MINIF,1,8));
+CHARNIF CHAR(1):= SUBSTR(MINIF,9,1);
+COMPARACION INT:=MOD(NUMNIF,23)+1;
+VERIFICACION VARCHAR2(23):='TRWAGMYFPDXBNJZSQVHLCKE';
+BEGIN
+IF UPPER(CHARNIF) = SUBSTR(VERIFICACION,COMPARACION,1)THEN
+   DBMS_OUTPUT.PUT_LINE('SU DNI ES CORRECTO');
+ELSE 
+    DBMS_OUTPUT.PUT_LINE('SU DNI NO ES CORRECTO');
+END IF;
+END;
+/
+UNDEFINE METEDNI;
+--7. 
+--Realiza una función a la que se le pase por parámetro un valor de empno de la tabla EMP, y devuelva los campos nombre y salario.
+--En el supuesto de que no haya encontrado ningún empno en la tabla EMP con dicho valor, que llame a una excepción que muestre por pantalla "Valor no existe en la base de datos".
+DECLARE
+MIEMPNO EMP.EMPNO%TYPE:=&METEEMPNO;
+MINOMBRE EMP.ENAME%TYPE;
+MISALARIO EMP.SAL%TYPE;
+EXISTE INT:=0;
+BEGIN
+    SELECT COUNT(*) INTO EXISTE FROM EMP WHERE EMPNO =MIEMPNO;
+    SELECT ENAME, SAL INTO MINOMBRE, MISALARIO FROM EMP WHERE EMPNO=MIEMPNO;
+    IF EXISTE =1 THEN
+    DBMS_OUTPUT.PUT_LINE(MINOMBRE|| ' '|| MISALARIO);
+    ELSE
+    DBMS_OUTPUT.PUT_LINE('EL EMPNO NO ES CORRECTO');
+    END IF;
+END;
+/
+UNDEFINE METEEMPNO;
 
-6. 
-Pedir por pantalla un NIF (8 números y una letra). Comprobar si la letra es correcta y luego mostrar por pantalla si ese NIF es correcto.
+--8. 
+--Realiza una función a la que se le pase por parámetro un valor de empno de la tabla EMP, y si existe, que borre el registro completo.
+--En el supuesto de que no haya encontrado ningún empno en la tabla EMP con dicho valor, que llame a una excepción que muestre por pantalla "No se ha podido borrar, el valor no existe en la base de datos".
+DECLARE
+MIEMPNO EMP.EMPNO%TYPE:= &METEEMPNO;
+MINOMBRE EMP.ENAME%TYPE;
+MISALARIO EMP.SAL%TYPE;
+EXISTE INT:=0;
+BEGIN
+    SELECT COUNT(*) INTO EXISTE FROM EMP WHERE EMPNO =MIEMPNO;
+    
+    IF EXISTE =1 THEN
+    DELETE FROM EMP WHERE EMPNO=MIEMPNO;
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('SU EMPNO HA SIDO DELETEADO');
+    ELSE
+    DBMS_OUTPUT.PUT_LINE('No se ha podido borrar, el valor no existe en la base de datos');
+    END IF;
+END;
+/
+UNDEFINE METEEMPNO;
+--9. 
+--Realiza un procedimiento que muestre por pantalla el nombre de todos los departamentos de la tabla DEPT.
+DECLARE
 
-7. 
-Realiza una función a la que se le pase por parámetro un valor de empno de la tabla EMP, y devuelva los campos nombre y salario.
-En el supuesto de que no haya encontrado ningún empno en la tabla EMP con dicho valor, que llame a una excepción que muestre por pantalla "Valor no existe en la base de datos".
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('');
 
-8. 
-Realiza una función a la que se le pase por parámetro un valor de empno de la tabla EMP, y si existe, que borre el registro completo.
-En el supuesto de que no haya encontrado ningún empno en la tabla EMP con dicho valor, que llame a una excepción que muestre por pantalla "No se ha podido borrar, el valor no existe en la base de datos".
+END;
+/
 
-9. 
-Realiza un procedimiento que muestre por pantalla el nombre de todos los departamentos de la tabla DEPT.
-
-10. 
-Realiza una función que devuelva el número total de empleados de la tabla EMP.
-Si el número total es mayor de 5, crea una excepción que muestre el mensaje "hay más de 5 empleados".
+--10. 
+--Realiza una función que devuelva el número total de empleados de la tabla EMP.
+--Si el número total es mayor de 5, crea una excepción que muestre el mensaje "hay más de 5 empleados".
 
 11. 
 Crea un programa que pida dos números enteros por pantalla. Si ambos números son divisibles entre sí (requisito, el primer número debe ser mayor o igual que el segundo), entonces que muestre por pantalla el mensaje “Son divisibles”. En caso contrario, que se muestre el mensaje "No son divisibles". NOTA: dos números son divisibles si su resto es cero. Puedes usar la función MOD.

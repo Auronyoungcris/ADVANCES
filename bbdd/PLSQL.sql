@@ -506,10 +506,83 @@ BEGIN
     END LOOP;
 END;
 /
+--Cursores
+Declare
+codigo asignaturas.codigo%type;
+codigo2 asignaturas.codigo%type;
+profe asignaturas.profesor%type;
+begin
+--select codigo into codigo  from asignaturas where descripcion= 'Programacion';
+select profesor into profe from asignaturas where descripcion = 'Redes';
+select codigo into codigo2 from asignaturas where descripcion in('Ingles','Frances');
+DBMS_OUTPUT.PUT_LINE(profe);
+exception
+when  no_data_found then
+    DBMS_OUTPUT.PUT_LINE('No existe esa asignatura.');
 
+end;
+/
+--ejercicio1
+declare 
+midni estudiantes.dni%type:='&METEDNI';
+minombre estudiantes.nombre%type;
+miapellido estudiantes.apellidos%type;
+begin
+select nombre, apellidos into minombre, miapellido from estudiantes where dni = midni;
+DBMS_OUTPUT.PUT_LINE(minombre|| ' '|| miapellido);
+exception
+when no_data_found then 
+DBMS_OUTPUT.PUT_LINE('Ese dni no esta en la base de datos');
+end;
+/
+UNDEFINE METEDNI;
 
+--ejercicio2
+declare
+minombre estudiantes.nombre%type:='&METENOMBRE';
+midni estudiantes.dni%type;
+miapellido estudiantes.apellidos%type;
+begin
+select dni, apellidos into midni, miapellido from estudiantes where nombre= minombre;
 
+DBMS_OUTPUT.PUT_LINE(midni||' '||miapellido);
+exception
+when too_many_rows then
+DBMS_OUTPUT.PUT_LINE('Hay mas de un estudiante');
+when no_data_found then
+DBMS_OUTPUT.PUT_LINE('No hay datos');
+end;
+/
+undefine METENOMBRE;
+--ejercicio3
+declare
+cursor misestudiantes is select * from estudiantes;
+fila estudiantes%ROWTYPE;
+begin
+open misestudiantes;
+loop
+fetch misestudiantes into fila;
+if misestudiantes%notfound then
+exit;
+end if;
+DBMS_OUTPUT.PUT_LINE(fila.nombre||' '|| fila.apellidos||' '||fila.dni);
+DBMS_OUTPUT.PUT_LINE('El estudiante: '||misestudiantes%ROWCOUNT);
+end loop;
+close misestudiantes;
+end;
+/
+declare
+cursor misestudiantes is select * from estudiantes;
+contador int:=1;
+begin
 
+for i in misestudiantes loop 
+DBMS_OUTPUT.PUT_LINE(i.nombre||' '|| i.apellidos||' '||i.dni);
+DBMS_OUTPUT.PUT_LINE('El estudiante: '||contador);
+contador:=contador+1;
+end loop;
+end;
+/
 
 
 

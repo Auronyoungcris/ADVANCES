@@ -68,32 +68,48 @@ select piezas.nombre  from piezas join PIEZAS_MAQUINAS on piezas.idpie = Piezas_
 join maquinas on maquinas.ref = PIEZAS_MAQUINAS.id_maquina
  where maquinas.nombre= 'Bomba para piscinas' order by  piezas.nombre desc;
 --20. Devuelve el nombre, el tipo y el estado de las piezas que empiezan por "A" sin usar LIKE.
-select nombre, tipo, estado from piezas where SUBSTR(upper(nombre),1,1) !='A';
+select nombre, tipo, estado from piezas where SUBSTR(upper(nombre),1,1) ='A';
 
 --21. ¿Cuántas piezas pertenecen al tipo ELECTRICO? Indica tan solo el número.
 select count(*) from piezas where tipo ='ELECTRICO';
 --22. ¿Cuánto dinero se ha obtenido de la fabricación de la máquina Lijadora industrial? Indica solo una columna con el importe con dos decimales.
 -- Recuerda que para obtener dinero de una máquina, el avance de las líneas de fabricación de un producto debe haber llegado al estado FINALIZADO.
-select precio_venta from maquinas join avances_lineas_fabricacion on maquinas.ref=avances_lineas_fabricacion.id_maquina 
+select round(sum(precio_venta),2) from maquinas join avances_lineas_fabricacion on maquinas.ref=avances_lineas_fabricacion.id_maquina 
 where nombre ='Lijadora industrial' and avances_lineas_fabricacion.estado='FINALIZADO';
 
 --23. ¿Cuál son los nombres de las piezas que se emplean en más máquinas (que se use en estas independientemente de la cantidad)?
 select  nombre from piezas join piezas_maquinas on piezas.idpie =piezas_maquinas.id_pieza 
 where piezas_maquinas.cantidad= (select max(cantidad)from piezas_maquinas);
 --24. ¿En los nombres de qué maquinas se usa la pieza "Elastico"?
+SELECT MAQUINAS.NOMBRE FROM MAQUINAS JOIN PIEZAS_MAQUINAS ON MAQUINAS.REF =PIEZAS_MAQUINAS.id_maquina 
+JOIN PIEZAS ON PIEZAS.IDPIE= PIEZAS_MAQUINAS.ID_PIEZA WHERE piezas.nombre='Elastico';
 
 --25. ¿Cuál es el nombre de la máquina que inició su puesta a punto el 11/11/2023 a las 20:05? No emplees join, solo subconsultas.
+Select maquinas.nombre from maquinas where ref =(select id_maquina from avances_lineas_fabricacion where fecha ='11/11/2023' and hora ='20:05');
 
 --26. ¿Cuántos registros de avances en las líneas de fabricación, independientemente de su estado, hay de la máquina "Amasadora pan"?
-
+select count(*) from avances_lineas_fabricacion join maquinas on avances_lineas_fabricacion.id_maquina =maquinas.ref where maquinas.nombre ='Amasadora pan';
 --27. Indica el nombre de la máquina cuyo precio es inferior a 1000 euros pero se tarda más de 500 minutos en fabricarla.
+select nombre from maquinas  where precio_venta BETWEEN 500 and 1000 and T_FABRICACION =500;
 
 --28. Indica los nombre de los clientes que tienen la máquina pedida para fabricar en estado FINALIZADO y por tanto ya pueden usarla.
-
+select clientes.nombre_empresa from clientes join avances_lineas_fabricacion on avances_lineas_fabricacion.id_cliente =clientes.cif where avances_lineas_fabricacion.estado ='FINALIZADO';
 --29. ¿Cuántos registros en los avances de las líneas de fabricación se han realizado desde la línea de fabricación 1 entre las 08:00 y las 15:00?
+select count(*) from avances_lineas_fabricacion where LINEA_FABRICACION =1 and hora BETWEEN '08:00' and '15:00';
 
 --30. Indica el tipo de la pieza Servomotor. Debes mostrar dicho tipo con el tamaño/número de caracteres que sea el tamaño del tipo que tenga menos letras. En este caso, es OTROS, que tiene 5 caracteres, pero no puedes usar el número 5, debes calcular en tu query ese tamaño mínimo.
+select length(substr(tipo,1,(select min(length(tipo)) from piezas ))) from piezas where nombre ='Servomotor';
 
 --31. Se quiere saber el nombre del cliente, el tiempo de fabricación de la máquina que pidió, el nombre de la pieza que se usa en mayor cantidad en dicha máquina que pidió y el tipo de dicha pieza, que se encuentren registradas en los avances de las líneas de fabricación en la línea de fabricación 1. Muestra los resultados sin repetir.
+select distinct clientes.nombre_empresa, maquinas.T_FABRICACION, piezas.nombre, piezas.tipo 
+from clientes
+join avances_lineas_fabricacion on avances_lineas_fabricacion.id_cliente =clientes.cif 
+join maquinas on maquinas.ref = avances_lineas_fabricacion.id_maquina join piezas_maquinas on piezas_maquinas.id_maquina =maquinas.ref join piezas on piezas.idpie =PIEZAS_MAQUINAS.id_pieza 
+where  avances_lineas_fabricacion.LINEA_FABRICACION=1 and piezas_maquinas.cantidad =(select max(piezas_maquinas.cantidad) from clientes join avances_lineas_fabricacion on avances_lineas_fabricacion.id_cliente =clientes.cif 
+join maquinas on maquinas.ref =avances_lineas_fabricacion.id_maquina join piezas_maquinas on piezas_maquinas.id_maquina =maquinas.ref join piezas on piezas.idpie =PIEZAS_MAQUINAS.id_pieza 
+where  avances_lineas_fabricacion.LINEA_FABRICACION=1);
 
 --32. Se quiere mostrar una lista con todas las piezas en una columna, y en otra columna la suma de la cantidad empleada de dicha pieza en cada máquina. Ordena por dicha suma de mayor a menor.
+select piezas.NOMBRE, sum(piezas_maquinas.CANTIDAD) from piezas join piezas_maquinas on piezas_maquinas.id_pieza = piezas.IDPIE GROUP BY piezas.nombre ORDER by 2 desc;
+
+

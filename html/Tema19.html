@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<HEAD>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Curso Html Tema 14">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Meta ,Responsive">
+    <meta name="author" content="Daniel Vázquez Chinchilla">
+    <title>Tema 19 html</title>
+    <link rel="icon" href="imagen/favicon.ico">
+    <link rel="stylesheet" href="estilos/estilostema19.css">
+</HEAD>
+<body>
+<h2>Ejemplo Canvas</h2>
+<canvas id="myCanvas" width="200" height="100" style="border: 1px solid #000000;"></canvas>
+<script>
+    var c =document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.strokeStyle = "blue";
+    ctx.lineWisth =5;
+    ctx.moveTo(0,0);
+    ctx.lineTo(200,100);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = "green";
+    ctx.lineWisth =5;
+    ctx.arc(95,50,40,0,2*Math.PI);
+    ctx.stroke();
+
+</script>
+<h2>Ejemplo Canvas2</h2>
+<canvas id="myCanvas2" width="200" height="100" style="border: 1px solid #000000;"></canvas>
+<script>
+    var c =document.getElementById("myCanvas2");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.lineWisth =5;
+    ctx.moveTo(200,0);
+    ctx.lineTo(0,100);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = "green";
+    ctx.lineWisth =5;
+    ctx.arc(95,50,40,0,1*Math.PI);
+    ctx.stroke();
+
+</script>
+<h2>Ejemplo Canvas2</h2>
+<canvas id="myCanvas3" width="200" height="100" style="border: 1px solid #000000;"></canvas>
+<script>
+    var c =document.getElementById("myCanvas3");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.strokeStyle = "green";
+    ctx.lineWisth =5;
+    ctx.arc(95,20,10,0,2*Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.lineWisth =5;
+    ctx.moveTo(85,30);
+    ctx.lineTo(105,30);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.lineWisth =5;
+    ctx.moveTo(105,30);
+    ctx.lineTo(105,90);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.lineWisth =5;
+    ctx.moveTo(105,90);
+    ctx.lineTo(85,90);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.lineWisth =5;
+    ctx.moveTo(85,90);
+    ctx.lineTo(85,30);
+    ctx.stroke();
+
+</script>
+</body>
+</html>
