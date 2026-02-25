@@ -15,12 +15,13 @@ public class Smartphone {
 	private Boolean activo;
 
 	public Smartphone() {
-		super();
+		iniciar();
 	}
 
 	public Smartphone(String imei) {
 		super();
 		this.imei = imei;
+		iniciar();
 	}
 
 	public Smartphone(String marca, String modelo, String imei) {
@@ -28,6 +29,13 @@ public class Smartphone {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.imei = imei;
+		iniciar();
+		
+	}
+	private void iniciar() {
+		activar();
+		precio=BigDecimal.ZERO;
+		
 	}
 
 	public void setPrecio(BigDecimal precio) {
@@ -42,6 +50,7 @@ public class Smartphone {
 		activo = false;
 	}
 	public Integer getedad() {
+		
 		LocalDate añosTranscurridos = LocalDate.of(2000, Month.APRIL, 01);
 		Period periodo =fechaFabricacion.until(añosTranscurridos);
 		return periodo.getYears();
@@ -57,15 +66,15 @@ public class Smartphone {
 	}
 
 	public BigDecimal getPrecioMasIva() {
-		BigDecimal precioIva = precio.multiply(new BigDecimal(1.21));
-		return precioIva.setScale(2,RoundingMode.HALF_EVEN);
+	
+		return precio.multiply(new BigDecimal(1.21));
 	}
 	public Boolean isAltaGama(BigDecimal precioBase) {
-		return precioBase.compareTo(precio)<0;
+		return (precioBase.compareTo(precio)<0);
 			
 		}
 	public Boolean isDatosCompletos() {
-		return !(imei==null) || !(imei.isBlank()) && !(precio==null);
+		return !(imei==null) && !(imei.isBlank()) && !(precio==null);
 		
 	}
 	public Boolean isGratis() {
