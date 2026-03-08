@@ -48,12 +48,81 @@ COMMIT;
  JOIN ATLETAS ON ATLETAS.DNI = CARRERAS_PARTICIPAN_ATLETAS.DNI_ATLETA GROUP BY ATLETAS.NOMBRE,ATLETAS.APELLIDOS HAVING COUNT(*) =(SELECT MAX(COUNT(*)) FROM CARRERAS JOIN CARRERAS_PARTICIPAN_ATLETAS ON CARRERAS_PARTICIPAN_ATLETAS.CODIGO_CARRERA = CARRERAS.CODIGO
  JOIN ATLETAS ON ATLETAS.DNI = CARRERAS_PARTICIPAN_ATLETAS.DNI_ATLETA GROUP BY ATLETAS.NOMBRE,ATLETAS.APELLIDOS);
  --2.8 Datos de clubes con responsable "Pedro" y un '9' en su NIF.
+ select * from clubes where responsable like 'Pedro%' and nif like'%9%';
  --2.9 Nombre de los atletas con menos entrenamientos realizados.
+ select atletas.nombre, count(*) from entrenamientos join ATLETAS_REALIZAN_ENTRENAMIENTOS on ATLETAS_REALIZAN_ENTRENAMIENTOS.ID_ENTRENAMIENTO
+ = entrenamientos.ID join atletas on atletas.dni = ATLETAS_REALIZAN_ENTRENAMIENTOS.DNI_ATLETA group by atletas.nombre having count(*) =(select min(count(*))
+ from ENTRENAMIENTOS join ATLETAS_REALIZAN_ENTRENAMIENTOS on ATLETAS_REALIZAN_ENTRENAMIENTOS.ID_ENTRENAMIENTO
+ = entrenamientos.ID join atletas on atletas.dni = ATLETAS_REALIZAN_ENTRENAMIENTOS.DNI_ATLETA group by atletas.nombre);
  --2.10 Día de la semana de inicio y día del mes de fin de inscripción para carreras que NO sean en 'Córdoba'.
+ select trim(to_char(F_inicio_inscrip,'day','NLS_DATE_LANGUAGE = SPANISH')), trim(to_char(F_fin_inscrip,'MONTH','NLS_DATE_LANGUAGE = SPANISH')) from carreras where localidad !='Cordoba';
 --2.11 Nombre de carrera y número de espacios en dicho nombre (Alias: "Nun.espacios").
+select nombre, length(nombre) "Nun.espacios"  from carreras;
  --2.12 Nombre y apellidos del atleta de mayor edad.
+ select nombre, apellidos from atletas where fecha_nacimiento =(select min(fecha_nacimiento) from atletas);
  --2.13 Nombre del club (en minúsculas) del atleta más joven.
+ select  nombre from clubes where nif=(select nif_club from atletas where fecha_nacimiento=(select max(FECHA_NACIMIENTO) from atletas));
  --2.14 Suma de las horas del tiempo empleado en la carrera 'Grand Prix Madrid'.
+select sum(to_number(SUBSTR(tiempo,2,1))) from CARRERAS_PARTICIPAN_ATLETAS join carreras on carreras.CODIGO =
+CARRERAS_PARTICIPAN_ATLETAS.CODIGO_CARRERA where carreras.NOMBRE = 'Grand Prix Madrid';
+select * from CARRERAS_PARTICIPAN_ATLETAS;
  --2.15 Nombre del entrenamiento (en mayúsculas) con dureza 10 y duración entre 50 y 100.
- --2.16 Dorsales que participaron en carreras con ID par.Ejercicio 
- --3 (PL/SQL - 3 puntos)Se requiere un bloque anónimo que:Pida un DNI al usuario.Defina un record (tipoAtleta) y una variable (miAtleta) con dni y nombre.Verifique la existencia del DNI: si no existe, lanzar mensaje "No hay atletas con el DNI AAA".Si existe pero no tiene carreras: mostrar "El atleta con nombre BBB no ha disputado ninguna carrera" y guardar datos en miAtleta.Si tiene carreras: mostrar el nombre de todas las carreras y el dorsal utilizado.Estructura de Tablas (Esquema)CARRERAS: PCODIGO, NOMBRE, LOCALIDAD, FECHA, PREMIO, etc.ATLETAS: PDNI, NOMBRE, APELLIDOS, FECHA_NACIMIENTO, NIF_CLUB.CLUBES: PNIF, NOMBRE, LOCALIDAD, RESPONSABLE.Tablas intermedias: CARRERAS_PARTICIPAN_ATLETAS y ATLETAS_REALIZAN_ENTRENAMIENTOS.¿Necesitas que te ayude a resolver alguna de las cons
+ select upper(nombre) from entrenamientos where dureza=10 and duracion BETWEEN 50 and 100;
+ --2.16 Dorsales que participaron en carreras con ID par.
+ select dorsal from CARRERAS_PARTICIPAN_ATLETAS where mod(codigo_carrera,2)=0;
+ --Ejercicio 3 (PL/SQL - 3 puntos)Se requiere un bloque anónimo que:Pida un DNI al usuario.
+ --Defina un record (tipoAtleta) y una variable (miAtleta) con dni y nombre.
+ --Verifique la existencia del DNI: si no existe, lanzar mensaje "No hay atletas con el DNI AAA".
+ --Si existe pero no tiene carreras: mostrar "El atleta con nombre BBB no ha disputado ninguna carrera" 
+ --y guardar datos en miAtleta.
+ --Si tiene carreras: mostrar el nombre de todas las carreras y el dorsal utilizado.
+DECLARE
+    -- Pide DNI al usuario
+    usuario atletas.DNI%TYPE := '&METEDNI';
+    
+    -- Define un record (tipoAtleta) y una variable (miAtleta)
+    TYPE tipoAtleta IS RECORD (
+        dni char(9),
+        nombre varchar2(50)
+    );
+    miAtleta tipoAtleta;
+    
+    numeroCarreras INT := 0;
+    atletaExiste INT := 0;
+BEGIN
+    -- 1. Verificar la existencia del DNI
+    SELECT count(*) INTO atletaExiste FROM atletas WHERE dni = usuario;
+
+    IF atletaExiste = 0 THEN
+        DBMS_OUTPUT.PUT_LINE('No hay atletas con el DNI ' || usuario);
+    ELSE
+        -- 2. Si existe, obtenemos sus datos y los guardamos en miAtleta
+        SELECT dni, nombre INTO miAtleta.dni, miAtleta.nombre 
+        FROM atletas 
+        WHERE dni = usuario;
+
+        -- 3. Contamos sus carreras
+        SELECT count(*) INTO numeroCarreras 
+        FROM CARRERAS_PARTICIPAN_ATLETAS 
+        WHERE dni_atleta = usuario;
+
+        IF numeroCarreras = 0 THEN
+            -- Si no tiene carreras: mensaje y ya tenemos los datos en miAtleta
+            DBMS_OUTPUT.PUT_LINE('El atleta con nombre ' || miAtleta.nombre || ' no ha disputado ninguna carrera');
+        ELSE
+            -- 4. Si tiene carreras: mostrar nombre de la carrera y dorsal
+            -- Hacemos un JOIN para sacar el nombre de la tabla 'carreras'
+            FOR ic IN (
+                SELECT c.nombre, pa.dorsal 
+                FROM CARRERAS_PARTICIPAN_ATLETAS pa
+                JOIN carreras c ON pa.codigo_carrera = c.codigo
+                WHERE pa.dni_atleta = usuario
+            ) LOOP
+                DBMS_OUTPUT.PUT_LINE('Carrera: ' || ic.nombre || ' | Dorsal: ' || ic.dorsal);
+            END LOOP;
+        END IF;
+    END IF;
+END;
+/
+select * from CARRERAS_PARTICIPAN_ATLETAS;
+undefine &METEDNI;
